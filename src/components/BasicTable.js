@@ -6,14 +6,14 @@ import './table.css'
 
 export const BasicTable = () => {
 
-    const [POSTS, setPost] = useState([])
+    let [POSTS, setPost] = useState([])
     const [search, setSearch] = useState('react')
     const [searchFromButtonClick, setSearchFromButtonClick] = useState('')
 
     const columns = useMemo(() => COLUMNS, [])
-    const data = useMemo(() => POSTS, [])
+    const data = useMemo(() => POSTS, [POSTS])
 
-    const {
+    let {
         getTableProps,
         getTableBodyProps,
         headerGroups,

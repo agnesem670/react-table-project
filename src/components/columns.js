@@ -13,12 +13,12 @@ export const COLUMNS = [
     {
         Header: 'Author',
         Footer: 'Author',
-        accessor: 'volumeInfo.authors[0]',
+        accessor: 'volumeInfo.authors',
     },
     {
         Header: 'Id',
         Footer: 'Id',
-        accessor: 'volumeInfo.id',
+        accessor: 'id',
        
     },
  
