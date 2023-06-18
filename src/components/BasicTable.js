@@ -1,10 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
+import { useTable } from 'react-table'
+import { COLUMNS } from './columns'
 import axios from 'axios'
+import './table.css'
 
-function BasicTable() {
-    const [posts, setPost] = useState([])
+export const BasicTable = () => {
+
+    const [POSTS, setPost] = useState([])
     const [search, setSearch] = useState('react')
     const [searchFromButtonClick, setSearchFromButtonClick] = useState('')
+
+    const columns = useMemo(() => COLUMNS, [])
+    const data = useMemo(() => POSTS, [])
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        footerGroups,
+        rows,
+        prepareRow,
+    } = useTable({
+        columns,
+        data
+    })
 
     const handleClick = () => {
         setSearchFromButtonClick(search)
@@ -22,43 +41,57 @@ function BasicTable() {
                 console.log(err)
             })
     }, [searchFromButtonClick])
-    
+
     return (
         <div>
-            <input type='text' placeholder='What book you Are looking for?'value={search} onChange={e => setSearch(e.target.value)} />
+
+            <input type='text' value={search} onChange={e => setSearch(e.target.value)} />
             <button type='button' onClick={handleClick}>Search</button>
-            
-            <table>
+
+            <table {...getTableProps()}>
                 <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Subtitle</th>
-                        <th>Author</th>
-                        <th>Image</th>
-                    </tr>
+                    {headerGroups.map((headerGroup) => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map((column) => (
+                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                            ))
+                            }
+                        </tr>
+                    ))}
+
                 </thead>
-                <tbody>
-                        {posts.map(post => (
-                        <tr>
-                            <td key={post.id}>{post.volumeInfo.title}</td>
-                            <td key={post.id}>{post.volumeInfo.subtitle}</td>
-                            <td key={post.id}>{post.volumeInfo.authors[0]}<br></br>{post.volumeInfo.authors[1]}</td>
-                            <td key={post.id}>{post.volumeInfo.id}</td>
-                        </tr>))
-                        }
+                <tbody {...getTableBodyProps()}>
+                    {rows.map((row) => {
+                        prepareRow(row)
+                        return (
+                            <tr{...row.getRowProps()}>
+                                {row.cells.map((cell) => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                })}
+                            </tr>
+                        )
+                    })
+                    }
+
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td></td>
-                    </tr>
+                    {
+                        footerGroups.map(footerGroup => (
+                            <tr {...footerGroup.getFooterGroupProps()}>
+                                {
+                                    footerGroup.headers.map(column => (
+                                        <td {...column.getFooterProps}>
+                                            {
+                                                column.render('Footer')
+                                            }
+                                        </td>
+                                    ))
+                                }
+                            </tr>
+                        ))
+                    }
                 </tfoot>
-            </table> 
-            <ul>
-                {posts.map(post => (
-                    <li key={post.accessInfo.id}>{post.volumeInfo.title}</li>))
-                }
-            </ul>
-
+            </table>
         </div>
     )
 }
