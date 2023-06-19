@@ -1,11 +1,19 @@
 import './App.css';
-import BasicTable from './components/BasicTable';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import BasicTablePage from './pages/BasicTablePage';
 
 
 function App() {
   return (
     <div>
-      <BasicTable />
+      <BrowserRouter>
+        <Routes>
+          <Route index element = {<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="home/table" element={<BasicTablePage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

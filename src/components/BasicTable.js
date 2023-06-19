@@ -19,8 +19,8 @@ export const BasicTable = () => {
             .get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${APIKey}`)
 
             .then(response => {
-                console.log(response)
                 setPost(response.data.items)
+                
             })
             .catch(err => {
                 console.log(err)
@@ -113,10 +113,11 @@ export const BasicTable = () => {
                     {rows.map((row) => {
                         prepareRow(row)
                         return (
-                            <tr{...row.getRowProps()}>
+                            <tr{...row.getRowProps()} key={row.index}>
                                 {row.cells.map((cell) => {
                                     return <td {...cell.getCellProps()}>{cell.render('Cell')} </td>
                                 })}
+                                
                             </tr>
                         )
 
