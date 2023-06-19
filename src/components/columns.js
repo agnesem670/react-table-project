@@ -11,8 +11,8 @@ export const COLUMNS = [
         accessor: 'volumeInfo.subtitle',
     },
     {
-        Header: 'Author',
-        Footer: 'Author',
+        Header: 'Authors',
+        Footer: 'Authors',
         accessor: 'volumeInfo.authors',
     },
     {
@@ -20,7 +20,8 @@ export const COLUMNS = [
         Footer: 'Id',
         accessor: 'id',
        
-    },
+    }
+
  
 ]
 

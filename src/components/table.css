@@ -21,3 +21,17 @@ table th, tfoot td {
   background-color: #04AA6D;
   color: white;
 }
+
+.none {
+  display: none;
+}
+
+.details{
+  display: block;
+  position: fixed;
+  border: 3px solid #73AD21;
+  height: 200 px;
+  width: 100 px;
+  bottom: 20px;
+  left: 20 px;
+}
